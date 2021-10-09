@@ -1,0 +1,24 @@
+{
+  "name": "rest-nerdery-challenge",
+  "version": "1.0.0",
+  "description": "This is a repo for Rest Nerdery Challenge of Ravn",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/csagastegui59/Rest-Nerdery-Challenge.git"
+  },
+  "keywords": [
+    "test",
+    "rest",
+    "api"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/csagastegui59/Rest-Nerdery-Challenge/issues"
+  },
+  "homepage": "https://github.com/csagastegui59/Rest-Nerdery-Challenge#readme"
+}
