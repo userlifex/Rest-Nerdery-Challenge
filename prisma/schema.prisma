@@ -1,0 +1,116 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+generator client {
+  provider = "prisma-client-js"
+}
+model Post {
+  id          String   @id @default(uuid())
+  tile        String
+  content     String
+  numLikes    Int      @map("num_likes")
+  numDislikes Int      @map("num_dislikes")
+  draft       Boolean
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  accountId   String   @map("account_id")
+  account     Account  @relation(fields: [accountId], references: [id])
+  comments Comment[]
+  reports  Report[]
+  likes    Like[]
+  dislikes Dislike[]
+  @@map("posts")
+}
+model Account {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  username      String?  @unique
+  password      String
+  name          String
+  isPublicEmail Boolean  @map("is_public_email")
+  isPublicName  Boolean  @map("is_public_name")
+  isModerator   Boolean? @map("is_moderator")
+  tokenEmail    String   @map("token_email")
+  tokenPassword String?  @map("token_password")
+  verifiedAt    DateTime @map("verified_at")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+  posts    Post[]
+  comments Comment[]
+  tokens   Token[]
+  likes    Like[]
+  dislikes Dislike[]
+  reports  Report[]
+  @@map("accounts")
+}
+model Token {
+  id           String    @id @default(uuid())
+  status       Boolean   @map("status")
+  accessToken  String    @map("access_token")
+  refreshToken String    @map("refresh_token")
+  ttl          DateTime?
+  dueAt        DateTime? @map("due_at")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+  accountId    String    @map("account_id")
+  account      Account   @relation(fields: [accountId], references: [id])
+  @@map("tokens")
+}
+model Comment {
+  id          String   @id @default(uuid())
+  content     String
+  numLikes    Int      @map("num_likes")
+  numDislikes Int      @map("num_dislikes")
+  draft       Boolean
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  accountId   String   @map("account_id")
+  postId      String   @map("post_id")
+  account     Account  @relation(fields: [accountId], references: [id])
+  post        Post     @relation(fields: [postId], references: [id])
+  reports  Report[]
+  likes    Like[]
+  dislikes Dislike[]
+  @@map("comments")
+}
+model Like {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  accountId String   @map("account_id")
+  commentId String?  @map("comment_id")
+  postId    String?  @map("post_id")
+  account   Account  @relation(fields: [accountId], references: [id])
+  comment   Comment? @relation(fields: [commentId], references: [id])
+  post      Post?    @relation(fields: [postId], references: [id])
+  @@map("likes")
+}
+model Dislike {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  accountId String   @map("account_id")
+  commentId String?  @map("comment_id")
+  postId    String?  @map("post_id")
+  account   Account  @relation(fields: [accountId], references: [id])
+  comment   Comment? @relation(fields: [commentId], references: [id])
+  post      Post?    @relation(fields: [postId], references: [id])
+  @@map("dislikes")
+}
+model Report {
+  id          String   @id @default(uuid())
+  description String
+  createdAt   DateTime @default(now()) @map("report_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  accountId   String   @map("account_id")
+  commentId   String?  @map("comment_id")
+  postId      String?  @map("post_id")
+  account     Account  @relation(fields: [accountId], references: [id])
+  comment     Comment? @relation(fields: [commentId], references: [id])
+  post        Post?    @relation(fields: [postId], references: [id])
+  @@map("reports")
+}
