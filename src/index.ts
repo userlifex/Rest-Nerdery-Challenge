@@ -1,15 +1,23 @@
-import express, { NextFunction, Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express'
+import dotenv from 'dotenv' /* load environment variables */
+import router from './router'
 
-const app = express();
-const PORT = 3000;
-const ENVIRONMENT = 'development';
+dotenv.config()
 
-app.use(express.json());
+const app = express()
+const PORT = process.env.API_PORT || 3000
+const ENVIRONMENT = process.env.NODE_ENV || 'development'
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
+app.use('/', router)
 
 app.use('/', (req: Request, res: Response) => {
-  res.json({ name: 'foo', lastName: 'bar' });
-});
+  res.json({ name: 'foo', lastName: 'bar' })
+})
 
 app.listen(PORT, async () => {
-  console.log(`Server listening on ${PORT}`);
-});
+  // eslint-disable-next-line no-console
+  console.log(`Server listening on ${PORT} in ${ENVIRONMENT}`)
+})
