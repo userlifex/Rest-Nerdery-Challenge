@@ -13,8 +13,13 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use('/', router(app))
 
-app.use('/', (req: Request, res: Response) => {
-  res.json({ name: 'foo', lastName: 'bar' })
+app.use('/*', (req: Request, res: Response) => {
+  res.status(404)
+  res.json({
+    title: 'Not foud',
+    description: 'Page not found',
+    code: 404,
+  })
 })
 
 app.listen(PORT, async () => {
