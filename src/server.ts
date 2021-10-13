@@ -1,4 +1,4 @@
-import express, { NextFunction, Request, Response } from 'express'
+import express, { Request, Response } from 'express'
 import dotenv from 'dotenv' /* load environment variables */
 import router from './router'
 
@@ -11,7 +11,7 @@ const ENVIRONMENT = process.env.NODE_ENV || 'development'
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-app.use('/', router)
+app.use('/', router(app))
 
 app.use('/', (req: Request, res: Response) => {
   res.json({ name: 'foo', lastName: 'bar' })

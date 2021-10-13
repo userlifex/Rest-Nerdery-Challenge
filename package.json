@@ -2,10 +2,10 @@
   "name": "rest-nerdery-challenge",
   "version": "1.0.0",
   "description": "This is a repo for Rest Nerdery Challenge of Ravn",
-  "main": "index.ts",
+  "main": "server.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node-dev src/index.ts"
+    "dev": "ts-node-dev src/server.ts"
   },
   "author": "",
   "license": "ISC",
