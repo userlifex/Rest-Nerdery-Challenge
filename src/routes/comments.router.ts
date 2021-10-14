@@ -9,8 +9,11 @@ import {
 const commentsRouter = express.Router()
 
 function commentsRoutes(): Router {
-  commentsRouter.route('/').post(create).get(find)
-  commentsRouter.route('/:id').put(edit).delete(deleteOne)
+  commentsRouter.route('/:postId/comments').post(create).get(find)
+  commentsRouter
+    .route('/:postId/comments/:commentId')
+    .put(edit)
+    .delete(deleteOne)
 
   return commentsRouter
 }

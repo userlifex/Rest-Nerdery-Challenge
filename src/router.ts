@@ -16,7 +16,7 @@ function router(app: Router): Router {
   app.use('/', validationRoutes())
   app.use('/posts', postsRootRoutes())
   app.use('/accounts', postsRoutes())
-  app.use('/posts/:id/comments', commentsRoutes())
+  app.use('/posts', commentsRoutes())
   app.use('/', reportsRoutes())
   app.use('/forgot-password', forgotRoutes())
   app.use('/', likesRoutes())

@@ -2,7 +2,7 @@ import { Prisma, Report } from '@prisma/client'
 import createError from 'http-errors'
 import prisma from './prisma.service'
 
-export default class PostsService {
+export default class ReportsService {
   static async find(): Promise<Report[]> {
     return prisma.report.findMany({})
   }
@@ -11,7 +11,7 @@ export default class PostsService {
     return prisma.report.findUnique({ where: { id } })
   }
 
-  static async update(id: string, input: string): Promise<Report> {
+  static async update(id: string, input: any): Promise<Report> {
     try {
       return prisma.report.update({
         data: input,
