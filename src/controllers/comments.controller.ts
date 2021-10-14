@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import PostsService from '../services/posts.services'
+import PostsService from '../services/posts.service'
 
 const create = async (req: Request, res: Response) => {
   const { postId } = req.params
