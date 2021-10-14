@@ -2,7 +2,7 @@ import express, { Router } from 'express'
 import {
   create,
   find,
-  edit,
+  update,
   deleteOne,
 } from '../controllers/comments.controller'
 
@@ -12,7 +12,7 @@ function commentsRoutes(): Router {
   commentsRouter.route('/:postId/comments').post(create).get(find)
   commentsRouter
     .route('/:postId/comments/:commentId')
-    .put(edit)
+    .put(update)
     .delete(deleteOne)
 
   return commentsRouter
