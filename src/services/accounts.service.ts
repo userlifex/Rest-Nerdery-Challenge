@@ -1,5 +1,6 @@
 import { Prisma, Account } from '@prisma/client'
 import createError from 'http-errors'
+import CreateAccountDto from '../dtos/accounts/req/create-account.dto'
 import prisma from './prisma.service'
 
 export default class AccountsService {
@@ -30,23 +31,21 @@ export default class AccountsService {
     }
   }
 
-  /* eslint-disable */
-  static async create(input: any): Promise<Account> {
-    input = {
-      name: 'miley',
-      email: 'miley@gmail.com',
-      password: '1234',
-      tokenEmail: '12',
-      isPublicName: true,
-      isPublicEmail: true,
-      verifiedAt: new Date(),
+  static async create(input: CreateAccountDto): Promise<Account> {
+    const account = await prisma.account.count({
+      where: {
+        email: input.email,
+      },
+    })
+
+    if (account) {
+      throw new createError.UnprocessableEntity('email already taken')
     }
 
     return prisma.account.create({ data: input })
   }
 
   static async delete(id: string): Promise<Account> {
-    console.log('')
     const account = await prisma.account.delete({
       where: {
         id,

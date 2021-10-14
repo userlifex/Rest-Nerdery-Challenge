@@ -1,5 +1,6 @@
 import { Expose, Exclude } from 'class-transformer'
 import {
+  IsBoolean,
   IsEmail,
   IsNotEmpty,
   IsOptional,
@@ -18,7 +19,6 @@ export default class CreateAccountDto extends BaseDto {
 
   @Expose()
   @IsString()
-  @IsNotEmpty()
   @Length(6, 20)
   readonly password: string
 
@@ -31,4 +31,12 @@ export default class CreateAccountDto extends BaseDto {
   @IsString()
   @IsNotEmpty()
   readonly name: string
+
+  @Exclude()
+  @IsBoolean()
+  readonly isPublicName: boolean = false
+
+  @Exclude()
+  @IsBoolean()
+  readonly isPublicEmail: boolean = false
 }
