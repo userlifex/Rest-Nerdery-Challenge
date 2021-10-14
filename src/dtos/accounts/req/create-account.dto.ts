@@ -34,9 +34,9 @@ export default class CreateAccountDto extends BaseDto {
 
   @Exclude()
   @IsBoolean()
-  readonly isPublicName: boolean = false
+  readonly isPublicName: boolean
 
   @Exclude()
   @IsBoolean()
-  readonly isPublicEmail: boolean = false
+  readonly isPublicEmail: boolean
 }

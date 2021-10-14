@@ -22,7 +22,6 @@ const signup = async (req: Request, res: Response) => {
     const account = await AccountsService.create(dto)
     res.send({
       account,
-      body: req.body,
     })
   } catch (error) {
     res.status(400).send({ error })
