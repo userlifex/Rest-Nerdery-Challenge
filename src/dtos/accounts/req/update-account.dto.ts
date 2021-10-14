@@ -10,15 +10,16 @@ import {
 import BaseDto from '../../base.dto'
 
 @Exclude()
-export default class CreateAccountDto extends BaseDto {
+export default class UpdateAccountDto extends BaseDto {
   @Expose()
   @IsEmail()
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   readonly email: string
 
   @Expose()
   @IsString()
+  @IsOptional()
   @Length(6, 20)
   readonly password: string
 
@@ -29,6 +30,7 @@ export default class CreateAccountDto extends BaseDto {
 
   @Expose()
   @IsString()
+  @IsOptional()
   @IsNotEmpty()
   readonly name: string
 
