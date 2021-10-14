@@ -10,7 +10,7 @@ generator client {
 }
 model Post {
   id          String   @id @default(uuid())
-  title        String
+  title       String
   content     String
   numLikes    Int      @map("num_likes") @default(0)
   numDislikes Int      @map("num_dislikes") @default(0)
