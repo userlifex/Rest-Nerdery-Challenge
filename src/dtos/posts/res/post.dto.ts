@@ -1,5 +1,6 @@
 import { Expose, Exclude, Transform } from 'class-transformer'
 import {
+  IsBoolean,
   IsNumber,
   IsPositive,
   IsNotEmpty,
@@ -36,6 +37,11 @@ export default class PostDto extends BaseDto {
   @IsOptional()
   @IsPositive()
   readonly numDislikes: number
+
+  @Exclude()
+  @IsBoolean()
+  @IsOptional()
+  readonly draft: boolean
 
   @Expose()
   @Transform(({ value }) => value?.toISOString())

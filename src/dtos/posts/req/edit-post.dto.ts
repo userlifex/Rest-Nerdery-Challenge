@@ -1,7 +1,7 @@
-import { Expose, Exclude, Transform } from 'class-transformer'
+import { Expose, Exclude } from 'class-transformer'
 import {
+  IsBoolean,
   IsNumber,
-  IsPositive,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -9,39 +9,37 @@ import {
 import BaseDto from '../../base.dto'
 
 @Exclude()
-export default class PostDto extends BaseDto {
+export default class EditPostDto extends BaseDto {
   @Expose()
   @IsString()
   @IsNotEmpty()
+  @IsOptional()
   readonly id: string
 
   @Expose()
   @IsString()
   @IsNotEmpty()
+  @IsOptional()
   readonly title: string
 
   @Expose()
   @IsString()
   @IsNotEmpty()
+  @IsOptional()
   readonly content: string
 
   @Expose()
   @IsNumber()
   @IsOptional()
-  @IsPositive()
   readonly numLikes: number
 
   @Expose()
   @IsNumber()
   @IsOptional()
-  @IsPositive()
   readonly numDislikes: number
 
-  @Expose()
-  @Transform(({ value }) => value?.toISOString())
-  readonly createdAt: Date
-
-  @Expose()
-  @Transform(({ value }) => value?.toISOString())
-  readonly updatedAt: Date
+  @Exclude()
+  @IsBoolean()
+  @IsOptional()
+  readonly draft: boolean
 }

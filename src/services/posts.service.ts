@@ -46,4 +46,14 @@ export default class PostsService {
       },
     })
   }
+
+  static async exists(id: string): Promise<boolean> {
+    const count = await prisma.post.count({ where: { id } })
+
+    return !!count
+  }
+
+  static async findAllPosts(): Promise<Post[]> {
+    return prisma.post.findMany({ where: { draft: false } })
+  }
 }
