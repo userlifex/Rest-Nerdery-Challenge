@@ -1,7 +1,8 @@
 import { Expose, Exclude, Transform } from 'class-transformer'
 import {
   IsBoolean,
-  IsEmail,
+  IsNumber,
+  IsPositive,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -9,40 +10,38 @@ import {
 import BaseDto from '../../base.dto'
 
 @Exclude()
-export default class AccountsPublicDto extends BaseDto {
+export default class PostDto extends BaseDto {
   @Expose()
   @IsString()
   @IsNotEmpty()
   readonly id: string
 
-  @Exclude()
-  @IsBoolean()
-  readonly isPublicName: boolean
-
-  @Exclude()
-  @IsBoolean()
-  readonly isPublicEmail: boolean
-
   @Expose()
-  @IsEmail()
   @IsString()
   @IsNotEmpty()
-  readonly email: string
-
-  @Expose()
-  @IsString()
-  @IsOptional()
-  readonly password: string
-
-  @Expose()
-  @IsString()
-  @IsOptional()
-  readonly username: string
+  readonly title: string
 
   @Expose()
   @IsString()
   @IsNotEmpty()
-  readonly name: string
+  readonly content: string
+
+  @Expose()
+  @IsNumber()
+  @IsOptional()
+  @IsPositive()
+  readonly numLikes: number
+
+  @Expose()
+  @IsNumber()
+  @IsOptional()
+  @IsPositive()
+  readonly numDislikes: number
+
+  @Exclude()
+  @IsBoolean()
+  @IsOptional()
+  readonly draft: boolean
 
   @Expose()
   @Transform(({ value }) => value?.toISOString())

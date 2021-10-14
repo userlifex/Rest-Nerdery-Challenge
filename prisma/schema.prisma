@@ -10,11 +10,11 @@ generator client {
 }
 model Post {
   id          String   @id @default(uuid())
-  tile        String
+  title        String
   content     String
-  numLikes    Int      @map("num_likes")
-  numDislikes Int      @map("num_dislikes")
-  draft       Boolean
+  numLikes    Int      @map("num_likes") @default(0)
+  numDislikes Int      @map("num_dislikes") @default(0)
+  draft       Boolean  @default(false)
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
   accountId   String   @map("account_id")
@@ -30,9 +30,9 @@ model Account {
   email         String   @unique
   username      String?  @unique
   password      String
-  name          String
-  isPublicEmail Boolean  @map("is_public_email")
-  isPublicName  Boolean  @map("is_public_name")
+  name          String?
+  isPublicEmail Boolean  @map("is_public_email") @default(true)
+  isPublicName  Boolean  @map("is_public_name")  @default(true)
   isModerator   Boolean? @map("is_moderator")
   tokenEmail    String?   @map("token_email")
   tokenPassword String?  @map("token_password")
@@ -63,9 +63,9 @@ model Token {
 model Comment {
   id          String   @id @default(uuid())
   content     String
-  numLikes    Int      @map("num_likes")
-  numDislikes Int      @map("num_dislikes")
-  draft       Boolean
+  numLikes    Int      @map("num_likes") @default(0)
+  numDislikes Int      @map("num_dislikes") @default(0)
+  draft       Boolean  @default(false)
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
   accountId   String   @map("account_id")

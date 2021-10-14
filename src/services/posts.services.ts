@@ -1,5 +1,6 @@
 import { Prisma, Post } from '@prisma/client'
 import createError from 'http-errors'
+import CreatePostDto from '../dtos/posts/req/create-post.dto'
 import prisma from './prisma.service'
 
 export default class PostsService {
@@ -11,7 +12,11 @@ export default class PostsService {
     return prisma.post.findUnique({ where: { id } })
   }
 
-  static async update(id: string, input: string): Promise<Post> {
+  static async findByAccountId(accountId: string): Promise<Post[]> {
+    return prisma.post.findMany({ where: { accountId } })
+  }
+
+  static async update(id: string, input: CreatePostDto): Promise<Post> {
     try {
       return prisma.post.update({
         data: input,
@@ -30,15 +35,12 @@ export default class PostsService {
     }
   }
 
-  /* eslint-disable */
-  static async create(input: any): Promise<Post> {
-    input = {}
-
+  static async create(input: CreatePostDto): Promise<Post> {
     return prisma.post.create({ data: input })
   }
 
   static async delete(id: string): Promise<Post> {
-    return await prisma.post.delete({
+    return prisma.post.delete({
       where: {
         id,
       },

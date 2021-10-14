@@ -53,4 +53,10 @@ export default class AccountsService {
     })
     return account
   }
+
+  static async exists(id: string): Promise<boolean> {
+    const count = await prisma.account.count({ where: { id } })
+
+    return !!count
+  }
 }
