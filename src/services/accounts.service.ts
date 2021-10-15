@@ -1,9 +1,13 @@
 import { Prisma, Account } from '@prisma/client'
 import createError from 'http-errors'
+import dotenv from 'dotenv' /* load environment variables */
+import { getToken } from '../utils'
+import sendEmail from '../services/send-email.service'
 import CreateAccountDto from '../dtos/accounts/req/create-account.dto'
 import UpdateAccountDto from '../dtos/accounts/req/update-account.dto'
 import prisma from './prisma.service'
 
+dotenv.config()
 export default class AccountsService {
   static async find(): Promise<Account[]> {
     return prisma.account.findMany({})
@@ -46,7 +50,10 @@ export default class AccountsService {
       throw new createError.UnprocessableEntity('email already taken')
     }
 
-    return prisma.account.create({ data: input })
+    const tokenEmail = getToken()
+    await sendEmail(input.email, tokenEmail)
+
+    return prisma.account.create({ data: { ...input, tokenEmail } })
   }
 
   static async delete(id: string): Promise<Account> {
@@ -65,5 +72,14 @@ export default class AccountsService {
     const count = await prisma.account.count({ where: { id } })
 
     return !!count
+  }
+
+  static async existsEmail(email: string): Promise<boolean> {
+    const count = await prisma.account.count({ where: { email } })
+    if (count) {
+      throw new createError.UnprocessableEntity('email already exists')
+    }
+
+    return false
   }
 }
