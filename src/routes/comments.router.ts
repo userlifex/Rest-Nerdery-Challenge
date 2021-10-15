@@ -2,15 +2,18 @@ import express, { Router } from 'express'
 import {
   create,
   find,
-  edit,
+  update,
   deleteOne,
 } from '../controllers/comments.controller'
 
 const commentsRouter = express.Router()
 
 function commentsRoutes(): Router {
-  commentsRouter.route('/').post(create).get(find)
-  commentsRouter.route('/:id').put(edit).delete(deleteOne)
+  commentsRouter.route('/:postId/comments').post(create).get(find)
+  commentsRouter
+    .route('/:postId/comments/:commentId')
+    .put(update)
+    .delete(deleteOne)
 
   return commentsRouter
 }
