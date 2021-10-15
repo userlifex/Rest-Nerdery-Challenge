@@ -1,5 +1,6 @@
 import express, { Router } from 'express'
 import asyncHandler from 'express-async-handler'
+import passport from 'passport'
 import {
   commentsLike,
   commentsDislike,
@@ -10,6 +11,7 @@ import {
 const likesRouter = express.Router()
 
 function likesRoutes(): Router {
+  likesRouter.use(passport.authenticate('jwt', { session: false }))
   likesRouter.route('/posts/:postId/like').post(asyncHandler(postsLike))
 
   likesRouter.route('/posts/:postId/dislike').post(asyncHandler(postsDislike))

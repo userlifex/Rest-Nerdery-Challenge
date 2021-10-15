@@ -1,4 +1,5 @@
 import express, { Router } from 'express'
+import passport from 'passport'
 import {
   create,
   find,
@@ -9,6 +10,7 @@ import {
 const commentsRouter = express.Router()
 
 function commentsRoutes(): Router {
+  commentsRouter.use(passport.authenticate('jwt', { session: false }))
   commentsRouter.route('/:postId/comments').post(create).get(find)
   commentsRouter
     .route('/:postId/comments/:commentId')

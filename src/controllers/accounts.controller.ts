@@ -17,26 +17,18 @@ const findMyAccount = async (req: Request, res: Response) => {
   const dto = plainToClass(UserDto, req.user)
   await dto.isValid()
 
-  res.status(200).send({
-    data: dto,
-  })
-}
-
-const update = async (req: Request, res: Response) => {
-  const { accountId } = req.body
-  const dto = plainToClass(UpdateAccountDto, req.body)
-  await dto.isValid()
-  const account = await AccountsService.update(accountId, dto)
+  const account = await AccountsService.findOne(dto.id)
   res.status(200).send({
     data: account,
   })
 }
 
-const deleteOne = async (req: Request, res: Response) => {
-  const dto = plainToClass(UserDto, req.user)
-  await dto.isValid()
-
-  const account = await AccountsService.delete(dto.id)
+const update = async (req: Request, res: Response) => {
+  const userdto = plainToClass(UserDto, req.user)
+  const accountdto = plainToClass(UpdateAccountDto, req.body)
+  await userdto.isValid()
+  await accountdto.isValid()
+  const account = await AccountsService.update(userdto.id, accountdto)
   res.status(200).send({
     data: account,
   })
@@ -51,4 +43,4 @@ const findOne = async (req: Request, res: Response) => {
   })
 }
 
-export { find, findMyAccount, findOne, update, deleteOne }
+export { find, findMyAccount, findOne, update }
