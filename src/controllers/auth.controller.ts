@@ -7,14 +7,10 @@ import AuthsService from '../services/auths.service'
 
 const login = async (req: Request, res: Response) => {
   const dto = plainToClass(LoginDto, req.body)
-  try {
-    await dto.isValid()
-    const token = await AuthsService.login(dto)
+  await dto.isValid()
+  const token = await AuthsService.login(dto)
 
-    res.send({ data: token })
-  } catch (error) {
-    res.status(400).send({ title: 'Bad request', description: error })
-  }
+  res.send({ data: token })
 }
 
 const logout = (req: Request, res: Response) => {

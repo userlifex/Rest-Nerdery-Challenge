@@ -16,6 +16,10 @@ export default class AuthsService {
       throw new createError.UnprocessableEntity('invalid credentials')
     }
 
+    if (!account.verifiedAt) {
+      throw new createError.UnprocessableEntity('email not verified')
+    }
+
     const isValid = await bcrypt.compare(input.password, account.password)
 
     if (!isValid) {
