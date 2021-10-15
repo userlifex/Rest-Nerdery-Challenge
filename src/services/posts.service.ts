@@ -1,6 +1,7 @@
 import { Prisma, Post } from '@prisma/client'
 import createError from 'http-errors'
 import CreatePostDto from '../dtos/posts/req/create-post.dto'
+import EditPostDto from '../dtos/posts/req/edit-post.dto'
 import prisma from './prisma.service'
 
 export default class PostsService {
@@ -13,10 +14,27 @@ export default class PostsService {
   }
 
   static async findByAccountId(accountId: string): Promise<Post[]> {
-    return prisma.post.findMany({ where: { accountId } })
+    return prisma.post.findMany({ where: { accountId, draft: false } })
   }
 
-  static async update(id: string, input: CreatePostDto): Promise<Post> {
+  static async findPost(id: string): Promise<Post> {
+    return prisma.post.findFirst({
+      where: {
+        id,
+        draft: false,
+      },
+    })
+  }
+
+  static async findAllPosts(): Promise<Post[]> {
+    return prisma.post.findMany({ where: { draft: false } })
+  }
+
+  static async findMyPosts(id: string): Promise<Post[]> {
+    return prisma.post.findMany({ where: { id } })
+  }
+
+  static async update(id: string, input: EditPostDto): Promise<Post> {
     try {
       return prisma.post.update({
         data: input,
@@ -51,9 +69,5 @@ export default class PostsService {
     const count = await prisma.post.count({ where: { id } })
 
     return !!count
-  }
-
-  static async findAllPosts(): Promise<Post[]> {
-    return prisma.post.findMany({ where: { draft: false } })
   }
 }

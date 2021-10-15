@@ -38,10 +38,15 @@ export default class PostDto extends BaseDto {
   @IsPositive()
   readonly numDislikes: number
 
-  @Exclude()
+  @Expose()
   @IsBoolean()
   @IsOptional()
   readonly draft: boolean
+
+  @Expose()
+  @IsBoolean()
+  @IsOptional()
+  readonly isVisibleId: Record<string, boolean>
 
   @Expose()
   @Transform(({ value }) => value?.toISOString())
