@@ -2,17 +2,16 @@ import { Request, Response } from 'express'
 import { plainToClass } from 'class-transformer'
 import CreateAccountDto from '../dtos/accounts/req/create-account.dto'
 import AccountsService from '../services/accounts.service'
-import { getToken } from '../utils'
-import sendEmail from '../services/send-email.service'
+import LoginDto from '../dtos/auths/req/login.dto'
+import AuthsService from '../services/auths.service'
 
 const login = async (req: Request, res: Response) => {
-  const { email } = req.body
+  const dto = plainToClass(LoginDto, req.body)
   try {
-    await AccountsService.existsEmail(email)
-    const token = getToken()
-    const ga = await sendEmail(email, token)
+    await dto.isValid()
+    const token = await AuthsService.login(dto)
 
-    res.send({ token, ga })
+    res.send({ data: token })
   } catch (error) {
     res.status(400).send({ title: 'Bad request', description: error })
   }
