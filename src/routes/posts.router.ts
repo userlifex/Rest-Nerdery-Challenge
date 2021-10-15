@@ -15,9 +15,12 @@ const postsRootRouter = express.Router()
 
 function postsRoutes(): Router {
   postsRouter.route('/me/posts').get(findMyPosts).post(create)
-  postsRouter.route('/me/posts/:id').put(update).delete(deleteOne)
-  postsRouter.route('/:id/posts').get(findByAccountId)
-  postsRouter.route('/:id/posts/:id').delete(modDeleteOne).get(findOne)
+  postsRouter.route('/me/posts/:postId').put(update).delete(deleteOne)
+  postsRouter.route('/:accountId/posts').get(findByAccountId)
+  postsRouter
+    .route('/:accountId/posts/:postId')
+    .delete(modDeleteOne)
+    .get(findOne)
 
   return postsRouter
 }

@@ -7,6 +7,7 @@ import AccountsService from '../services/accounts.service'
 import PostDto from '../dtos/posts/res/post.dto'
 import PostsDto from '../dtos/posts/res/posts.dto'
 import EditPostDto from '../dtos/posts/req/edit-post.dto'
+import DeletePostDto from '../dtos/posts/req/delete-post'
 
 const findMyPosts = async (req: Request, res: Response) => {
   try {
@@ -74,10 +75,24 @@ const update = async (req: Request, res: Response) => {
   }
 }
 
-const deleteOne = (req: Request, res: Response) => {
-  res.send({
-    message: 'delete',
-  })
+const deleteOne = async (req: Request, res: Response) => {
+  const { postId } = req.params
+  const { accountId } = req.body
+  const dto = plainToClass(DeletePostDto, { postId, accountId })
+  // validacion para ver si el post te pertenece
+  try {
+    const validatedPost = await PostsService.exists(req.body.id)
+    if (!validatedPost) {
+      throw new createError.UnprocessableEntity('Post does not exist')
+    }
+    await dto.isValid()
+    const post = await PostsService.delete(postId)
+    res.status(200).send({
+      data: post,
+    })
+  } catch (error) {
+    res.status(400).send({ error })
+  }
 }
 
 const find = async (req: Request, res: Response) => {
@@ -100,10 +115,24 @@ const findOne = async (req: Request, res: Response) => {
   }
 }
 
-const modDeleteOne = (req: Request, res: Response) => {
-  res.send({
-    message: 'Mod delete a post',
-  })
+const modDeleteOne = async (req: Request, res: Response) => {
+  const { postId } = req.params
+  const { accountId } = req.body
+  const dto = plainToClass(DeletePostDto, { postId, accountId })
+  // validacion para ver si el post te pertenece
+  try {
+    const validatedPost = await PostsService.exists(req.body.id)
+    if (!validatedPost) {
+      throw new createError.UnprocessableEntity('Post does not exist')
+    }
+    await dto.isValid()
+    const post = await PostsService.delete(postId)
+    res.status(200).send({
+      data: post,
+    })
+  } catch (error) {
+    res.status(400).send({ error })
+  }
 }
 
 export {
