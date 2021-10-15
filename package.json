@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^3.2.0",
+    "@types/nodemailer": "^6.4.4",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
@@ -20,7 +21,10 @@
     "express": "^4.17.1",
     "express-async-handler": "^1.1.4",
     "http-errors": "^1.8.0",
-    "reflect-metadata": "^0.1.13"
+    "nodemailer": "^6.7.0",
+    "random-token": "0.0.8",
+    "reflect-metadata": "^0.1.13",
+    "ts-token-generator": "^1.0.4"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
