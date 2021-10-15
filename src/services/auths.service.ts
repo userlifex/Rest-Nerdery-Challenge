@@ -1,12 +1,12 @@
 import bcrypt from 'bcryptjs'
 import createError from 'http-errors'
+import dotenv from 'dotenv' /* load environment variables */
 import LoginDto from '../dtos/auths/req/login.dto'
-import TokenDto from '../dtos/auths/res/token.dto'
-import { generateJWTToken } from '../utils'
 import prisma from './prisma.service'
 
+dotenv.config()
 export default class AuthsService {
-  static async login(input: LoginDto): Promise<TokenDto> {
+  static async login(input: LoginDto): Promise<boolean> {
     const account = await prisma.account.findUnique({
       where: { email: input.email },
       rejectOnNotFound: false,
@@ -22,8 +22,6 @@ export default class AuthsService {
       throw new createError.UnprocessableEntity('invalid credentials')
     }
 
-    return {
-      token: generateJWTToken(account.id),
-    }
+    return isValid
   }
 }
