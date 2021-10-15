@@ -38,7 +38,7 @@ export default class EditPostDto extends BaseDto {
   @IsOptional()
   readonly numDislikes: number
 
-  @Exclude()
+  @Expose()
   @IsBoolean()
   @IsOptional()
   readonly draft: boolean
