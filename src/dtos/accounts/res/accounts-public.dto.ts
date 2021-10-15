@@ -7,23 +7,8 @@ export default class AccountsPublicDto extends BaseDto {
   @Expose()
   readonly id: string
 
-  @Exclude()
-  @IsBoolean()
-  readonly isPublicName: boolean
-
-  @Expose()
-  @IsBoolean()
-  readonly isModerator: boolean
-
-  @Exclude()
-  @IsBoolean()
-  readonly isPublicEmail: boolean
-
   @Expose()
   readonly email: string
-
-  @Expose()
-  readonly password: string
 
   @Expose()
   readonly username: string

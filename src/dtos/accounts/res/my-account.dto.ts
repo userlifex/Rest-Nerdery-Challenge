@@ -1,30 +1,26 @@
 import { Expose, Exclude, Transform } from 'class-transformer'
-import {
-  IsBoolean,
-  IsNumber,
-  IsPositive,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-} from 'class-validator'
 import BaseDto from '../../base.dto'
 
 @Exclude()
-export default class PostDto extends BaseDto {
+export default class MyAccountDto extends BaseDto {
   @Expose()
-  readonly id: string
+  readonly email: string
 
   @Expose()
-  readonly title: string
+  readonly username: string
 
   @Expose()
-  readonly content: string
+  readonly name: string
 
   @Expose()
-  readonly numLikes: number
+  readonly isPublicName: boolean
 
   @Expose()
-  readonly numDislikes: number
+  readonly isPublicEmail: boolean
+
+  @Expose()
+  @Transform(({ value }) => value?.toISOString())
+  readonly verifiedAt: Date
 
   @Expose()
   @Transform(({ value }) => value?.toISOString())
