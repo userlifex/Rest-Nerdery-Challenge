@@ -25,15 +25,12 @@ const logout = (req: Request, res: Response) => {
 
 const signup = async (req: Request, res: Response) => {
   const dto = plainToClass(CreateAccountDto, req.body)
-  try {
-    await dto.isValid()
-    const account = await AccountsService.create(dto)
-    res.send({
-      account,
-    })
-  } catch (error) {
-    res.status(400).send({ error })
-  }
+  await dto.isValid()
+  const account = await AccountsService.create(dto)
+
+  res.send({
+    account,
+  })
 }
 
 export { login, logout, signup }

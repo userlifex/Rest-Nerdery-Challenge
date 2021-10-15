@@ -1,14 +1,12 @@
 import { Prisma, Account } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 import createError from 'http-errors'
-import dotenv from 'dotenv' /* load environment variables */
 import { getToken } from '../utils'
-import sendEmail from '../services/send-email.service'
 import CreateAccountDto from '../dtos/accounts/req/create-account.dto'
 import UpdateAccountDto from '../dtos/accounts/req/update-account.dto'
+import sendEmail from './send-email.service'
 import prisma from './prisma.service'
 
-dotenv.config()
 export default class AccountsService {
   static async find(): Promise<Account[]> {
     return prisma.account.findMany({})

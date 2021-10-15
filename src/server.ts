@@ -1,12 +1,13 @@
-import express, { Request, Response } from 'express'
+import express, { NextFunction, Request, Response } from 'express'
 import dotenv from 'dotenv' /* load environment variables */
+import createHttpError, { HttpError } from 'http-errors'
 import router from './router'
 
 dotenv.config()
 
 const app = express()
 const PORT = process.env.API_PORT || 3000
-const ENVIRONMENT = process.env.NODE_ENV || 'development'
+const ENVIROMENT = process.env.NODE_ENV || 'development'
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -22,7 +23,26 @@ app.use('/*', (req: Request, res: Response) => {
   })
 })
 
+function errorHandler(
+  err: HttpError,
+  req: Request,
+  res: Response,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  next: NextFunction,
+): void {
+  if (ENVIROMENT !== 'development') {
+    // eslint-disable-next-line no-console
+    console.error(err.message)
+    // eslint-disable-next-line no-console
+    console.error(err.stack || '')
+  }
+
+  res.status(err.status ?? 500)
+  res.json(err)
+}
+
+app.use(errorHandler)
 app.listen(PORT, async () => {
   // eslint-disable-next-line no-console
-  console.log(`Server listening on ${PORT} in ${ENVIRONMENT}`)
+  console.log(`Server listening on ${PORT} in ${ENVIROMENT}`)
 })
