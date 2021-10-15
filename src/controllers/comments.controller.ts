@@ -1,7 +1,5 @@
 import { plainToClass } from 'class-transformer'
 import { Request, Response } from 'express'
-import createError from 'http-errors'
-import UpdateAccountDto from '../dtos/accounts/req/update-account.dto'
 import CreateCommentDto from '../dtos/comments/req/create-comment.dto'
 import UpdateCommentDto from '../dtos/comments/req/update-comment.dto'
 import CommentsService from '../services/comments.service'
