@@ -1,4 +1,6 @@
 import express, { Router } from 'express'
+import asyncHandler from 'express-async-handler'
+import passport from 'passport'
 import {
   findMyPosts,
   findByAccountId,
@@ -19,7 +21,10 @@ function postsRoutes(): Router {
   postsRouter.route('/:accountId/posts').get(findByAccountId)
   postsRouter
     .route('/:accountId/posts/:postId')
-    .delete(modDeleteOne)
+    .delete(
+      passport.authenticate('mi-jwt', { session: false }),
+      asyncHandler(modDeleteOne),
+    )
     .get(findOne)
 
   return postsRouter

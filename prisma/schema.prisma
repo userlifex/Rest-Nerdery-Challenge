@@ -33,7 +33,7 @@ model Account {
   name          String?
   isPublicEmail Boolean  @map("is_public_email") @default(true)
   isPublicName  Boolean  @map("is_public_name")  @default(true)
-  isModerator   Boolean? @map("is_moderator")
+  isModerator   Boolean @map("is_moderator") @default(false)
   tokenEmail    String?   @map("token_email")
   tokenPassword String?  @map("token_password")
   verifiedAt    DateTime? @map("verified_at")
@@ -49,9 +49,9 @@ model Account {
 }
 model Token {
   id           String    @id @default(uuid())
-  status       Boolean   @map("status")
-  accessToken  String    @map("access_token")
-  refreshToken String    @map("refresh_token")
+  status       Boolean?   @map("status")
+  accessToken  String?    @map("access_token")
+  refreshToken String?    @map("refresh_token")
   ttl          DateTime?
   dueAt        DateTime? @map("due_at")
   createdAt    DateTime  @default(now()) @map("created_at")
