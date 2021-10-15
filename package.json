@@ -23,6 +23,8 @@
     "http-errors": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
     "nodemailer": "^6.7.0",
+    "passport": "^0.5.0",
+    "passport-jwt": "^4.0.0",
     "random-token": "0.0.8",
     "reflect-metadata": "^0.1.13",
     "ts-token-generator": "^1.0.4"
@@ -35,6 +37,8 @@
     "@types/jest": "^27.0.2",
     "@types/jsonwebtoken": "^8.5.5",
     "@types/node": "^16.10.3",
+    "@types/passport": "^1.0.7",
+    "@types/passport-jwt": "^3.0.6",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "eslint": "^7.32.0",

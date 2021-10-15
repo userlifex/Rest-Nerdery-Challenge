@@ -14,7 +14,7 @@ const find = async (req: Request, res: Response) => {
 
 const findMyAccount = (req: Request, res: Response) => {
   res.send({
-    message: 'findMyAccount',
+    data: req.user,
   })
 }
 

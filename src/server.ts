@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express'
 import dotenv from 'dotenv' /* load environment variables */
-import createHttpError, { HttpError } from 'http-errors'
+import { HttpError } from 'http-errors'
 import router from './router'
 
 dotenv.config()
