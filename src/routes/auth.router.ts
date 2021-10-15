@@ -5,8 +5,8 @@ import { login, logout, signup } from '../controllers/auth.controller'
 const authRouter = express.Router()
 
 function authRoutes(): Router {
-  authRouter.route('/login').post(login)
-  authRouter.route('/logout').post(logout)
+  authRouter.route('/login').post(asyncHandler(login))
+  authRouter.route('/logout').post(asyncHandler(logout))
   authRouter.route('/signup').post(asyncHandler(signup))
 
   return authRouter
