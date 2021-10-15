@@ -67,7 +67,10 @@ export default class PostsService {
 
   static async exists(id: string): Promise<boolean> {
     const count = await prisma.post.count({ where: { id } })
+    if (!count) {
+      throw new createError.UnprocessableEntity('register does not exist')
+    }
 
-    return !!count
+    return true
   }
 }
