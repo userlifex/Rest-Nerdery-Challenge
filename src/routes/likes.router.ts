@@ -1,4 +1,5 @@
 import express, { Router } from 'express'
+import asyncHandler from 'express-async-handler'
 import {
   commentsLike,
   commentsDislike,
@@ -9,10 +10,17 @@ import {
 const likesRouter = express.Router()
 
 function likesRoutes(): Router {
-  likesRouter.route('/comments/:id/like').post(commentsLike)
-  likesRouter.route('/comments/:id/dislike').post(commentsDislike)
-  likesRouter.route('/posts/:id/like').post(postsLike)
-  likesRouter.route('/posts/:id/dislike').post(postsDislike)
+  likesRouter.route('/posts/:postId/like').post(asyncHandler(postsLike))
+
+  likesRouter.route('/posts/:postId/dislike').post(asyncHandler(postsDislike))
+
+  likesRouter
+    .route('/comments/:commentId/like')
+    .post(asyncHandler(commentsLike))
+
+  likesRouter
+    .route('/comments/:commentId/dislike')
+    .post(asyncHandler(commentsDislike))
 
   return likesRouter
 }

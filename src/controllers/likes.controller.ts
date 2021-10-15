@@ -1,26 +1,50 @@
 import { Request, Response } from 'express'
+import { plainToClass } from 'class-transformer'
+import PostLikeDto from '../dtos/likes/req/post-like.dto'
+import LikesService from '../services/likes.service'
+import CommentLikeDto from '../dtos/likes/req/comment-like.dto'
 
-const commentsLike = (req: Request, res: Response) => {
+const commentsLike = async (req: Request, res: Response) => {
+  const { accountId } = req.body
+  const { commentId } = req.params
+  const dto = plainToClass(CommentLikeDto, { accountId, commentId })
+  await dto.isValid()
+  const like = await LikesService.likeComment(dto)
   res.send({
-    message: 'comments like',
+    data: like,
   })
 }
 
-const commentsDislike = (req: Request, res: Response) => {
+const commentsDislike = async (req: Request, res: Response) => {
+  const { accountId } = req.body
+  const { commentId } = req.params
+  const dto = plainToClass(CommentLikeDto, { accountId, commentId })
+  await dto.isValid()
+  const like = await LikesService.dislikeComment(dto)
   res.send({
-    message: 'comments dislike',
+    data: like,
   })
 }
 
-const postsLike = (req: Request, res: Response) => {
+const postsLike = async (req: Request, res: Response) => {
+  const { accountId } = req.body
+  const { postId } = req.params
+  const dto = plainToClass(PostLikeDto, { accountId, postId })
+  await dto.isValid()
+  const like = await LikesService.likePost(dto)
   res.send({
-    message: 'posts like',
+    data: like,
   })
 }
 
-const postsDislike = (req: Request, res: Response) => {
+const postsDislike = async (req: Request, res: Response) => {
+  const { accountId } = req.body
+  const { postId } = req.params
+  const dto = plainToClass(PostLikeDto, { accountId, postId })
+  await dto.isValid()
+  const dislike = await LikesService.dislikePost(dto)
   res.send({
-    message: 'posts dislike',
+    data: dislike,
   })
 }
 
