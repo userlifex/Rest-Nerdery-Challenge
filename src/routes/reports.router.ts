@@ -1,11 +1,15 @@
 import express, { Router } from 'express'
-import { commentsCreate, postsCreate } from '../controllers/reports.controller'
+import asyncHandler from 'express-async-handler'
+import { commentReport, postReport } from '../controllers/reports.controller'
 
 const reportsRouter = express.Router()
 
 function reportsRoutes(): Router {
-  reportsRouter.route('/comments/:id/report').post(commentsCreate)
-  reportsRouter.route('/posts/:id/report').post(postsCreate)
+  reportsRouter
+    .route('/comments/:commentId/report')
+    .post(asyncHandler(commentReport))
+
+  reportsRouter.route('/posts/:postId/report').post(asyncHandler(postReport))
 
   return reportsRouter
 }

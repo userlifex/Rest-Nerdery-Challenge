@@ -87,6 +87,9 @@ model Like {
   account   Account  @relation(fields: [accountId], references: [id])
   comment   Comment? @relation(fields: [commentId], references: [id])
   post      Post?    @relation(fields: [postId], references: [id])
+
+  @@unique([accountId, commentId], name: "commentLike")
+  @@unique([accountId,  postId], name: "postLike")
   @@map("likes")
 }
 model Dislike {
@@ -99,6 +102,8 @@ model Dislike {
   account   Account  @relation(fields: [accountId], references: [id])
   comment   Comment? @relation(fields: [commentId], references: [id])
   post      Post?    @relation(fields: [postId], references: [id])
+  @@unique([accountId, commentId], name: "commentDislike")
+  @@unique([accountId,  postId], name: "postDislike")
   @@map("dislikes")
 }
 model Report {
@@ -109,6 +114,8 @@ model Report {
   accountId   String   @map("account_id")
   commentId   String?  @map("comment_id")
   postId      String?  @map("post_id")
+  @@unique([accountId, commentId], name: "commentReport")
+  @@unique([accountId,  postId], name: "postReport")
   account     Account  @relation(fields: [accountId], references: [id])
   comment     Comment? @relation(fields: [commentId], references: [id])
   post        Post?    @relation(fields: [postId], references: [id])
