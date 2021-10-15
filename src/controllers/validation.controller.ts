@@ -7,13 +7,9 @@ const validate = async (req: Request, res: Response) => {
   const { tokenEmail } = req.params
   const { email } = req.body
   const dto = plainToClass(ValidateEmailDto, { email, tokenEmail })
-  try {
-    await dto.isValid()
-    const account = await ValidationsService.validateEmail(dto)
-    res.send({ data: account, message: 'email validate' })
-  } catch (error) {
-    res.status(400).send({ title: 'Bad request', description: error })
-  }
+  await dto.isValid()
+  const account = await ValidationsService.validateEmail(dto)
+  res.send({ data: account, message: 'email validate' })
 }
 
 export default validate

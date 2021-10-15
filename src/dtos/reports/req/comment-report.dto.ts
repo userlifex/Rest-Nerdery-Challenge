@@ -3,7 +3,7 @@ import { IsNotEmpty, IsString } from 'class-validator'
 import BaseDto from '../../base.dto'
 
 @Exclude()
-export default class PostLikeDto extends BaseDto {
+export default class CommentReportDto extends BaseDto {
   @Expose()
   @IsString()
   @IsNotEmpty()
@@ -12,5 +12,10 @@ export default class PostLikeDto extends BaseDto {
   @Expose()
   @IsString()
   @IsNotEmpty()
-  readonly postId: string
+  readonly commentId: string
+
+  @Expose()
+  @IsString()
+  @IsNotEmpty()
+  readonly description: string
 }
