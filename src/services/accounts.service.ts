@@ -1,4 +1,5 @@
 import { Prisma, Account } from '@prisma/client'
+import bcrypt from 'bcryptjs'
 import createError from 'http-errors'
 import dotenv from 'dotenv' /* load environment variables */
 import { getToken } from '../utils'
@@ -15,6 +16,10 @@ export default class AccountsService {
 
   static async findOne(id: string): Promise<Account> {
     return prisma.account.findUnique({ where: { id } })
+  }
+
+  static async findByEmail(email: string): Promise<Account> {
+    return prisma.account.findUnique({ where: { email } })
   }
 
   static async update(id: string, input: UpdateAccountDto): Promise<Account> {
@@ -53,7 +58,11 @@ export default class AccountsService {
     const tokenEmail = getToken()
     await sendEmail(input.email, tokenEmail)
 
-    return prisma.account.create({ data: { ...input, tokenEmail } })
+    const cryptPass = await bcrypt.hash(input.password, 10)
+
+    return prisma.account.create({
+      data: { ...input, tokenEmail, password: cryptPass },
+    })
   }
 
   static async delete(id: string): Promise<Account> {
