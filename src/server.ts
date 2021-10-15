@@ -1,6 +1,5 @@
 import express, { Request, Response } from 'express'
 import dotenv from 'dotenv' /* load environment variables */
-import passport from 'passport'
 import router from './router'
 
 dotenv.config()
@@ -11,7 +10,6 @@ const ENVIRONMENT = process.env.NODE_ENV || 'development'
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(passport.initialize())
 
 app.use('/', router(app))
 

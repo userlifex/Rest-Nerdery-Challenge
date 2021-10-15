@@ -1,4 +1,4 @@
-import express, { Router, Request, Response } from 'express'
+import express, { Router } from 'express'
 import passport from 'passport'
 import {
   find,
@@ -14,13 +14,7 @@ function accountsRoutes(): Router {
   accountsRouter.route('/').get(find)
   accountsRouter
     .route('/me')
-    .get(
-      findMyAccount,
-      passport.authenticate('jwt', { session: false }),
-      (req: Request, res: Response) => {
-        res.send(req.user)
-      },
-    )
+    .get(passport.authenticate('jwt', { session: false }), findMyAccount)
     .put(update)
     .delete(deleteOne)
   accountsRouter.route('/:id').get(findOne)
