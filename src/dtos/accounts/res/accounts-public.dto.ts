@@ -11,6 +11,10 @@ export default class AccountsPublicDto extends BaseDto {
   @IsBoolean()
   readonly isPublicName: boolean
 
+  @Expose()
+  @IsBoolean()
+  readonly isModerator: boolean
+
   @Exclude()
   @IsBoolean()
   readonly isPublicEmail: boolean
