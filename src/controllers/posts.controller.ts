@@ -117,11 +117,10 @@ const findOne = async (req: Request, res: Response) => {
 
 const modDeleteOne = async (req: Request, res: Response) => {
   const { postId } = req.params
-  const { accountId } = req.body
-  const dto = plainToClass(DeletePostDto, { postId, accountId })
+  const dto = plainToClass(DeletePostDto, req.params)
   // validacion para ver si el post te pertenece
   try {
-    const validatedPost = await PostsService.exists(req.body.id)
+    const validatedPost = await PostsService.exists(req.params.postId)
     if (!validatedPost) {
       throw new createError.UnprocessableEntity('Post does not exist')
     }

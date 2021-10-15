@@ -4,6 +4,7 @@ import httpErros, { HttpError } from 'http-errors'
 import passport from 'passport'
 import router from './router'
 import startPassport from './middleware/login-auth.middleware'
+import startPassportModerator from './middleware/moderator.middleware'
 
 dotenv.config()
 
@@ -15,11 +16,12 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 startPassport(passport)
+startPassportModerator(passport)
 
 app.use(passport.initialize())
 app.use('/', router(app))
 
-app.use('/*', (req: Request, res: Response) => {
+app.use('/*', () => {
   throw new httpErros.NotFound('not found')
 })
 

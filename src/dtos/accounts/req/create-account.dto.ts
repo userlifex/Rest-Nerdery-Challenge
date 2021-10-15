@@ -41,4 +41,9 @@ export default class CreateAccountDto extends BaseDto {
   @IsOptional()
   @IsBoolean()
   readonly isPublicEmail: boolean
+
+  @Expose()
+  @IsOptional()
+  @IsBoolean()
+  readonly isModerator: boolean
 }
