@@ -6,7 +6,6 @@ import {
   findMyAccount,
   findOne,
   update,
-  deleteOne,
 } from '../controllers/accounts.controller'
 
 const accountsRouter = express.Router()
@@ -21,12 +20,8 @@ function accountsRoutes(): Router {
       asyncHandler(findMyAccount),
     )
     .put(passport.authenticate('jwt', { session: false }), asyncHandler(update))
-    .delete(
-      passport.authenticate('jwt', { session: false }),
-      asyncHandler(deleteOne),
-    )
 
-  accountsRouter.route('/:id').get(findOne)
+  accountsRouter.route('/:id').get(asyncHandler(findOne))
 
   return accountsRouter
 }
