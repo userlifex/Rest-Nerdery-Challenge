@@ -19,6 +19,9 @@ startPassport(passport)
 startPassportModerator(passport)
 
 app.use(passport.initialize())
+app.get('/hello', (req: Request, res: Response) => {
+  res.json({ hola: 'mundo' })
+})
 app.use('/', router(app))
 
 app.use('/*', () => {

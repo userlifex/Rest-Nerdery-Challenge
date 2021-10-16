@@ -4,6 +4,9 @@
   "description": "This is a repo for Rest Nerdery Challenge of Ravn",
   "main": "server.ts",
   "scripts": {
+    "start": "node build/server.ts",
+    "build": "tsc",
+    "postinstall": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node-dev src/server.ts",
     "dev:watch": "nodemon src/server.ts",
