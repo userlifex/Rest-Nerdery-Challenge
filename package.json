@@ -4,9 +4,11 @@
   "description": "This is a repo for Rest Nerdery Challenge of Ravn",
   "main": "server.ts",
   "scripts": {
-    "start": "ts-node src/server.ts",
+    "start": "node dist/server.js",
+    "build": "npx tsc",
     "dev": "ts-node-dev src/server.ts",
     "dev:watch": "nodemon src/server.ts",
+    "prisma:migrate": "npx prisma migrate deploy",
     "start:build": "tsc",
     "start:prod": "node dist/server.js"
   },
